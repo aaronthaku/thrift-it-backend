@@ -37,6 +37,9 @@ const User = new mongoose.Schema({
   userType: {
     type: String,
   },
+  googleId: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("User", User);

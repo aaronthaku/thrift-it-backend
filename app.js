@@ -1,9 +1,12 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const passport = require("passport");
+const cookieSession = require("cookie-session");
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(express.urlencoded({ extended: false }));
 
 app.use(express.static(__dirname + "/userImages"));
 app.use(express.static(__dirname + "/productImgs"));
@@ -12,12 +15,36 @@ app.use(express.static(__dirname + "/productImgs"));
 const connectDB = require("./config/dbconnection");
 connectDB();
 
+app.use(
+  cookieSession({
+    name: "session",
+    keys: ["akatsuki"],
+    maxAge: 24 * 60 * 60 * 100,
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true,
+  })
+);
+
 // Importing Routers // Models are imported in routers
 const userRouter = require("./routers/userRouter");
 const productRouter = require("./routers/productRouter");
 
+const passportSetup = require("./passport");
+const thirdpartyRouter = require("./routers/thirdpartyRouter");
+
 app.use(userRouter);
 app.use(productRouter);
+
+app.use("/thirdpartyRouter", thirdpartyRouter);
 
 app.listen(90);
 
