@@ -23,7 +23,7 @@ router.post(
     const name = req.body.name;
     const rich_desc = req.body.rich_desc;
     const desc = req.body.desc;
-    // const author = req.body.author;
+    const author = req.body.author;
     const category = req.body.category.split(",");
     const productOwner = req.userInfo._id;
 
@@ -183,7 +183,7 @@ router.put(
     const name = req.body.name;
     const rich_desc = req.body.rich_desc;
     const desc = req.body.desc;
-    // const author = req.body.author;
+    const author = req.body.author;
     const category = req.body.category.split(",");
     const id = req.body._id;
     console.log(name);
@@ -194,7 +194,7 @@ router.put(
           name: name,
           rich_desc: rich_desc,
           desc: desc,
-          //   author: author,
+          author: author,
           category: category,
         }
       )
@@ -213,7 +213,7 @@ router.put(
           name: name,
           rich_desc: rich_desc,
           desc: desc,
-          //   author: author,
+          author: author,
           category: category,
           product_pic: req.file.filename,
         }
@@ -291,9 +291,9 @@ router.put("/product/isNotAvailable", auth.userGuard, (req, res) => {
 });
 
 // get product by author (recommedation product)
-router.get("/product/getproductOwner/:productOwner", (req, res) => {
+router.get("/product/getauthor/:author", (req, res) => {
   Product.find({
-    productOwner: req.params.productOwner,
+    author: req.params.author,
   })
     .then((product) => {
       if (product != null) {
