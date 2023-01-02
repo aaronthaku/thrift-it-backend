@@ -40,11 +40,13 @@ const productRouter = require("./routers/productRouter");
 
 const passportSetup = require("./passport");
 const thirdpartyRouter = require("./routers/thirdpartyRouter");
+const otpRouter = require("./routers/otpRouter");
 
 app.use(userRouter);
 app.use(productRouter);
 
 app.use("/thirdpartyRouter", thirdpartyRouter);
+app.use(otpRouter);
 
 app.listen(90);
 
