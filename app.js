@@ -5,8 +5,10 @@ const passport = require("passport");
 const cookieSession = require("cookie-session");
 const app = express();
 
+app.use(cors());
+
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(__dirname + "/userImages"));
 app.use(express.static(__dirname + "/productImgs"));
@@ -42,9 +44,18 @@ const passportSetup = require("./passport");
 const thirdpartyRouter = require("./routers/thirdpartyRouter");
 const otpRouter = require("./routers/otpRouter");
 
+const reviewRouter = require("./routers/reviewRouter");
+const wishlistRouter = require("./routers/wishlistRouter");
+
+const recommendation = require("./routers/recommendation");
+
 app.use(userRouter);
 app.use(productRouter);
+app.use(wishlistRouter);
 
+app.use(recommendation);
+
+app.use(reviewRouter);
 app.use("/thirdpartyRouter", thirdpartyRouter);
 app.use(otpRouter);
 

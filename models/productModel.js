@@ -28,6 +28,11 @@ const Product = new mongoose.Schema({
     },
   ],
 
+  product_price: {
+    type: Number,
+    required: true,
+  },
+
   status: {
     type: String,
     default: "Pending",
